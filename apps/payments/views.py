@@ -270,6 +270,7 @@ class VerifyRazorpayPaymentView(APIView):
                 order = payment.order
                 order.status = order.Status.CONFIRMED
                 order.save(update_fields=["status", "updated_at"])
+                order.user.cart.items.all().delete()
                 notification_title = "Order Confirmed"
                 notification_message = "Your order payment was successful."
                 notification_type = Notification.NotificationType.ORDER
