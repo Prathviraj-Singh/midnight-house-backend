@@ -115,7 +115,7 @@ export default function AdminStaffPage() {
   };
 
   const handleToggleStaff = async (u: StaffUser) => {
-    if (u.id === user?.id) return; // apna account toggle nahi kar sakte
+   if (String(u.id) === String(user?.id)) return;
     setTogglingId(u.id);
     try {
       await api.patch(`/auth/admin/users/${u.id}/toggle-staff/`);
