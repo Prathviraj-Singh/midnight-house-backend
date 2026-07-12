@@ -180,7 +180,7 @@ export default function AdminStaffPage() {
                   <UserCard
                     key={u.id}
                     user={u}
-                    isSelf={u.id === user?.id}
+                    isSelf={String(u.id) === String(user?.id)}
                     isToggling={togglingId === u.id}
                     onToggle={() => handleToggleStaff(u)}
                   />
