@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: midnight_postgres_prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME:-midnight_house_db}
+      POSTGRES_USER: ${DB_USER:-midnight_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_db_password}
+    ports:
+      - "5432:5432"
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: midnight_redis_prod
+    ports:
+      - "6379:6379"
+    restart: always
+
+  web:
+    build:
+      context: ../../
+      dockerfile: deploy/docker/Dockerfile.prod
+    container_name: midnight_django_prod
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=False
+      - DB_NAME=${DB_NAME:-midnight_house_db}
+      - DB_USER=${DB_USER:-midnight_admin}
+      - DB_PASSWORD=${DB_PASSWORD:-secure_db_password}
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    container_name: midnight_nginx_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    depends_on:
+      - web
+    restart: always
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
