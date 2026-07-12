@@ -43,7 +43,9 @@ api.interceptors.response.use(
       } catch (refreshError) {
         isRefreshing = false;
         if (typeof window !== 'undefined') {
-          window.location.href = '/login';
+          if (!window.location.pathname.startsWith('/login') && !window.location.pathname.startsWith('/register')) {
+            window.location.href = '/login';
+          }
         }
         return Promise.reject(refreshError);
       }
