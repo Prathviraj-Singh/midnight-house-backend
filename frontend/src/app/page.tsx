@@ -24,8 +24,8 @@ function ParticleCanvas() {
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
 
     class P {
-      x = Math.random() * canvas.width;
-      y = Math.random() * canvas.height;
+      x = Math.random() * canvas!.width;
+      y = Math.random() * canvas!.height;
       r = Math.random() * 1.3 + 0.4;
       vx = (Math.random() - 0.5) * 0.25;
       vy = (Math.random() - 0.5) * 0.25;
@@ -35,10 +35,10 @@ function ParticleCanvas() {
         this.x += this.vx; this.y += this.vy;
         this.o += this.od;
         if (this.o < 0.03 || this.o > 0.3) this.od *= -1;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
+        if (this.x < 0) this.x = canvas!.width;
+        if (this.x > canvas!.width) this.x = 0;
+        if (this.y < 0) this.y = canvas!.height;
+        if (this.y > canvas!.height) this.y = 0;
       }
       draw() {
         ctx!.beginPath();
@@ -51,7 +51,7 @@ function ParticleCanvas() {
     resize();
     const ps = Array.from({ length: 90 }, () => new P());
     const loop = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       ps.forEach(p => { p.update(); p.draw(); });
       for (let a = 0; a < ps.length; a++) for (let b = a + 1; b < ps.length; b++) {
         const dx = ps[a].x - ps[b].x, dy = ps[a].y - ps[b].y;
