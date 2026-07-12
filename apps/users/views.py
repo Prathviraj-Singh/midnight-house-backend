@@ -20,16 +20,16 @@ def _set_auth_cookies(response, access_token, refresh_token):
         key='access_token',
         value=str(access_token),
         httponly=True,
-        secure=not getattr(settings, 'DEBUG', True),
-        samesite='Lax',
+        secure=True,
+        samesite='None',
         max_age=15 * 60,  # 15 minutes
     )
     response.set_cookie(
         key='refresh_token',
         value=str(refresh_token),
         httponly=True,
-        secure=not getattr(settings, 'DEBUG', True),
-        samesite='Lax',
+        secure=True,
+        samesite='None',
         max_age=7 * 24 * 60 * 60,  # 7 days
     )
 
