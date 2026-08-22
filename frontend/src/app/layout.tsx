@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     'Experience premium private theater slots, customizable birthday celebration packages, and high-quality cafe dining in Indore.',
   keywords:
     'Private Theater Indore, Midnight Cafe Indore, Birthday celebration space, Vijay Nagar Cafe, Scheme 74, Private Lounge Indore',
+  verification: {
+    google: 'wo5eaMs9b_gsWmyi9VZx8REgr2DbtJYUspP1w9g-wiE',
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +34,6 @@ export default function RootLayout({
         {/* Deep ambient glow backgrounds */}
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[150px] pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-amber-500/5 blur-[150px] pointer-events-none" />
-
         {/* AuthProvider wraps the entire app so any page can access user state */}
         <AuthProvider>
   <ClientWrapper>
